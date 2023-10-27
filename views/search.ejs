@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../stylesheets/style.css">
+  <style>
+    .search {
+      position: relative;
+      left: 25%;
+      display: flex;
+      gap: 10px;
+      padding: 10px;
+      font-family: gilroy;
+
+    }
+
+    input {
+      border-radius: 16px;
+
+      font-size: 17px;
+    }
+
+    button {
+      padding: 12px;
+      font-size: 19px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="search">
+    <h1 style="color: rgb(54, 44, 44); font-weight: 500;" >Search</h1>
+        <input type=" text" style="padding: 15px;">
+      <button onclick="searchSong()"> Submit </button>
+  </div>
+
+
+  <div class="right" style="width: 100%; ">
+    <div class="music" style="padding: 10px;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); width:100%">
+
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"
+    integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script>
+
+    async function searchSong() {
+      const result = await axios.post('/search', {
+        search: document.querySelector('input').value
+      })
+
+      let clutter = ''
+      result.data.songs.forEach(song => {
+        clutter += `  <div class="song" onclick="songCardClick('${song.fileName}')">
+                    <img src="/poster/${song.poster}" alt="">
+                    <div class="txt">
+                      <h5>
+                        ${song.title}
+                      </h5>
+                      <p>
+                        ${song.artist}
+                      </p>
+                      <p>
+                        ${song.album}
+                      </p>
+                    </div>
+        
+                    <div class="playbutton">
+                      <i class="ri-play-circle-fill"></i>
+                    </div>
+        
+                  </div>`
+      })
+
+      document.querySelector('.music').innerHTML = clutter
+    }
+
+  </script>
+
+</body>
+
+</html>

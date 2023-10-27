@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../stylesheets/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="main">
+    <div class="left">
+      <div class="top">
+        <div class="t">
+          <i class="ri-home-4-line"></i>
+          <a href="">
+            <h3>Home</h3>
+          </a>
+        </div>
+        <div class="t">
+          <i class="ri-search-line"></i>
+          <a href="/search">
+            <h3>Search</h3>
+          </a>
+        </div>
+
+
+      </div>
+      <div class="bottom"></div>
+    </div>
+    <div class="right">
+      <div class="musics">
+        <% currentUser.playList[0].songs.forEach( song=>{ %>
+          <div class="song" onclick="songCardClick('<%= song.fileName %>')">
+            <img src="/poster/<%= song.poster %>" alt="">
+            <div class="txt">
+              <h5>
+                <%=song.title%>
+              </h5>
+              <p>
+                <%=song.artist%>
+              </p>
+              <p>
+                <%=song.album%>
+              </p>
+            </div>
+
+            <div class="playbutton" onclick="songCardClick('<%= song.fileName %>')">
+              <i class="ri-play-circle-fill"></i>
+            </div>
+
+          </div>
+          <% }) %>
+
+
+      </div>
+
+      <audio src="/stream/4bd711e7700f415b43bac3177b25c3075c607781" controls></audio>
+    </div>
+  </div>
+
+  <script>
+
+    function songCardClick(filename) {
+      document.querySelector('audio').setAttribute('src', `/stream/${filename}`)
+      document.querySelector('audio').play()
+    }
+
+
+  </script>
+
+</body>
+
+</html>
